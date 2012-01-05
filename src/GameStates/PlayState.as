@@ -1,6 +1,7 @@
 package GameStates
 {
 	import GameObjects.Player;
+	import GameObjects.Room;
 	
 	import org.flixel.FlxG;
 	import org.flixel.FlxState;
@@ -8,16 +9,31 @@ package GameStates
 	
 	public class PlayState extends FlxState
 	{
+		private static var _player:Player;
+		private var room:Room;
+		
+		public static function get player():Player
+		{
+			return _player;
+		}
+		
+		
+		
 		public override function create():void
 		{
-			var temp:FlxText = new FlxText(0, 0, FlxG.width, "Hello, world!");
 			
-			temp.alignment = "center";
+			room = new Room();
+			this.add(room);
 			
-			var player:Player = new Player(22, 22);
-			this.add(player);
-			
-			this.add(temp);
+			_player = new Player(22, 22);
+			this.add(_player);
+
+		}
+		
+		public override function update():void
+		{
+			FlxG.collide(room, _player);
+			super.update();
 		}
 	}
 }
