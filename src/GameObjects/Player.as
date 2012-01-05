@@ -11,9 +11,6 @@ package GameObjects
 		private static const PLAYER_WALK_HOR_SPEED:Number = 60;
 		private static const PLAYER_WALK_VERT_SPEED:Number = 50;
 		
-		// We need to maintain a list of current reflections so we can synchronize our position
-		// with them properly
-		private var _reflectionList:Array = [];
 		
 		public function Player(X:Number=0, Y:Number=0)
 		{
@@ -30,7 +27,7 @@ package GameObjects
 		}
 		
 		public override function update():void
-		{
+		{		
 			// Player movement controls
 			this.acceleration = new FlxPoint();
 			if(FlxG.keys.DOWN || FlxG.keys.UP || FlxG.keys.LEFT || FlxG.keys.RIGHT)
@@ -70,7 +67,6 @@ package GameObjects
 			if (this.y + this.height > FlxG.height)
 				this.y = FlxG.height - this.height;
 		}
-		
 		
 	}
 }

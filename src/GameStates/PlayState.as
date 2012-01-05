@@ -33,7 +33,14 @@ package GameStates
 		public override function update():void
 		{
 			FlxG.collide(room, _player);
+			
+			//room.update();
+			//Make sure the player updates before everything else
+			//_player.update();
+			
+			
 			super.update();
+		
 		}
 	}
 }

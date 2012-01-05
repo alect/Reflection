@@ -5,23 +5,28 @@ package GameObjects
 	import Utils.ResourceManager;
 	
 	import org.flixel.FlxG;
+	import org.flixel.FlxGroup;
 	import org.flixel.FlxObject;
 	import org.flixel.FlxPoint;
+	import org.flixel.FlxRect;
 	import org.flixel.FlxSprite;
 	import org.flixel.FlxTilemap;
+	import org.osmf.layout.AbsoluteLayoutFacet;
 	
 	public class Mirror extends FlxObject
 	{
 		public static const MIRROR_TILE_SIZE:int = 10;
 		
 		// Mirrors need to maintain a list of the objects that they exclusively reflect
-		private var _mirrorExtraObjects:Array = [];
+		private var _mirrorExtraObjects:FlxGroup;
 
 		// Every mirror has a distinct reflection of the player. 
 		private var _playerReflection:FlxSprite;
 		
 		// Whether or not this mirror is active 
 		private var _active:Boolean = false;
+		
+		private var _syncRequired:Boolean;
 		
 		// alignment of the mirror. May or may not be a useful parameter. Haven't decided yet
 		// Uses the FlxObject Facing constants to keep things simple
@@ -65,6 +70,8 @@ package GameObjects
 			_playerReflection = new FlxSprite();
 			_playerReflection.loadGraphic(ResourceManager.playerArt, true, true, 8, 15);
 			
+			// set up our group of extra objects
+			_mirrorExtraObjects = new FlxGroup();
 		}
 		
 		
@@ -86,6 +93,7 @@ package GameObjects
 			{
 				// TODO: Code to render the mirror objects assuming the mirror is active
 				_mirrorTilemap.draw();
+				_mirrorExtraObjects.draw();
 				_playerReflection.draw();
 				_mirrorTransparency.draw();
 			}
@@ -95,7 +103,7 @@ package GameObjects
 		{
 			var player:Player = PlayState.player;
 			// First, determine whether we're active or not
-			if (playerInRange(player))
+			if (objectInRange(player))
 				activate();
 			else
 				deactivate();
@@ -108,72 +116,146 @@ package GameObjects
 				// TODO: update mirror objects. 
 				
 				// update the player's reflection to reflect the player's position
-				switch(_alignment) 
+				if(!_syncRequired)
 				{
-					case UP:
-						_playerReflection.x = player.x;
-						_playerReflection.y = this.y+this.height + (this.y-(player.y+player.height));
-						_playerReflection.frame = player.frame;
-						_playerReflection.facing = player.facing;
-						// Now flip it vertically
-						_playerReflection.scale.y = -1;
-						break;
-					case LEFT:
-						_playerReflection.y = player.y;
-						_playerReflection.x = this.x+this.width + (this.x-(player.x+player.width));
-						_playerReflection.frame = player.frame;
-						_playerReflection.facing = player.facing;
-						// Flip it horizontally
-						_playerReflection.scale.x = -1;
-						break;
-					case DOWN:
-						_playerReflection.x = player.x;
-						_playerReflection.y = this.y - ((player.y-(this.y+this.height))+player.height);
-						_playerReflection.frame = player.frame;
-						_playerReflection.facing = player.facing;
-						// Flip it vertically
-						_playerReflection.scale.y = -1;
-						break;
-					case RIGHT:
-						_playerReflection.y = player.y;
-						_playerReflection.x = this.x - ((player.x-(this.x+this.width))+player.width);
-						_playerReflection.frame = player.frame;
-						_playerReflection.facing = player.facing;
-						// Flip it horizontally
-						_playerReflection.scale.x = -1;
-						break;
+					updateReflection();
 				}
+				
+				
+				if(!_syncRequired)
+				{
+					_syncRequired = FlxG.collide(_mirrorTilemap, _playerReflection);
+					_syncRequired = FlxG.collide(_playerReflection, _mirrorExtraObjects) || _syncRequired;
+				}
+				else 
+				{
+					_syncRequired = false;
+				}
+				_playerReflection.preUpdate();
+				_playerReflection.update();
+				_playerReflection.postUpdate();
+				
+				_mirrorTilemap.preUpdate();
+				_mirrorTilemap.update();
+				_mirrorTilemap.postUpdate();
+				
+				_mirrorExtraObjects.update();
+				
+				
+
+				
+				if(_syncRequired)
+					syncWithReflection(player);
+				
+				
 				
 			}
 		}
 		
+		private function updateReflection():void
+		{
+			var player:Player = PlayState.player;
+			switch(_alignment) 
+			{
+				case UP:
+					_playerReflection.x = player.x;
+					_playerReflection.y = this.y+this.height + (this.y-(player.y+player.height));
+					_playerReflection.frame = player.frame;
+					_playerReflection.facing = player.facing;
+					// Now flip it vertically
+					_playerReflection.scale.y = -1;
+					_playerReflection.velocity = new FlxPoint(player.velocity.x, -player.velocity.y);
+					_playerReflection.acceleration = new FlxPoint(player.acceleration.x, -player.acceleration.y);
+					break;
+				case LEFT:
+					_playerReflection.y = player.y;
+					_playerReflection.x = this.x+this.width + (this.x-(player.x+player.width));
+					_playerReflection.frame = player.frame;
+					_playerReflection.facing = player.facing;
+					_playerReflection.velocity = new FlxPoint(-player.velocity.x, player.velocity.y);
+					_playerReflection.acceleration = new FlxPoint(-player.acceleration.x, player.acceleration.y);
+					// Flip it horizontally
+					_playerReflection.scale.x = -1;
+					break;
+				case DOWN:
+					_playerReflection.x = player.x;
+					_playerReflection.y = this.y - ((player.y-(this.y+this.height))+player.height);
+					_playerReflection.frame = player.frame;
+					_playerReflection.facing = player.facing;
+					_playerReflection.velocity = new FlxPoint(player.velocity.x, -player.velocity.y);
+					_playerReflection.acceleration = new FlxPoint(player.acceleration.x, -player.acceleration.y);
+					// Flip it vertically
+					_playerReflection.scale.y = -1;
+					break;
+				case RIGHT:
+					_playerReflection.y = player.y;
+					_playerReflection.x = this.x - ((player.x-(this.x+this.width))+player.width);
+					_playerReflection.frame = player.frame;
+					_playerReflection.facing = player.facing;
+					_playerReflection.velocity = new FlxPoint(-player.velocity.x, player.velocity.y);
+					_playerReflection.acceleration = new FlxPoint(-player.acceleration.x, player.acceleration.y);
+					// Flip it horizontally
+					_playerReflection.scale.x = -1;
+					break;
+			}
+		}
+		
+		/** 
+		 * Function called by the player to update its position with respect to a reflection
+		 */
+		public function syncWithReflection(player:Player):Boolean
+		{
+			switch(_alignment)
+			{
+				case UP:
+					player.x = _playerReflection.x;
+					player.y = this.y+this.height + (this.y-(_playerReflection.y+_playerReflection.height));
+					break;
+				case LEFT:
+					player.y = _playerReflection.y;
+					//player.x = this.x+this.width + (this.x-(_playerReflection.x+_playerReflection.width));
+					player.x = this.x-(_playerReflection.x-(this.x+this.width))-player.width;
+					break;
+				case DOWN:
+					player.x = _playerReflection.x;
+					player.y = this.y - ((_playerReflection.y-(this.y+this.height))+_playerReflection.height);
+					break;
+				case RIGHT:
+					player.y = _playerReflection.y;
+					player.x = this.x - ((_playerReflection.x-(this.x+this.width))+_playerReflection.width);
+					break;
+			}
+
+			return true;
+		}
+		
 		/**
-		 * Function to determine if the player has entered the range of this mirror (in which case, it should be activated
+		 * Function to determine if an object has entered the range of this mirror (in which case, it should be activated
 		 * Returns true of the player is within our range
 		 * False otherwise
 		 */
-		private function playerInRange(player:Player):Boolean
+		private function objectInRange(object:FlxObject):Boolean
 		{
 			// First, make sure that the player is within our "rectangle of influence"
 			// For now, return true if the player intersects our rectangle. 
 			// In the future, might also want to check if the player is hidden behind objects etc. 
-			var playerInRange:Boolean = false;
+			var objectInRange:Boolean = false;
 			switch(this._alignment)
 			{
 				case UP:
-					playerInRange = (player.y+player.height/2 < this.y && player.x+player.width > this.x && player.x < this.x+this.width);
+					objectInRange = (object.y+object.height/2 < this.y && object.x+object.width > this.x && object.x < this.x+this.width);
 					break;
 				case LEFT:
-					playerInRange = (player.x+player.width/2 < this.x && player.y+player.height > this.y && player.y < this.y+this.height);
+					objectInRange = (object.x+object.width/2 < this.x && object.y+object.height > this.y && object.y < this.y+this.height);
 					break;
 				case DOWN:
-					playerInRange = (player.y > this.y+this.height/2 && player.x+player.width > this.x && player.x < this.x+this.width);
+					objectInRange = (object.y > this.y+this.height/2 && object.x+object.width > this.x && object.x < this.x+this.width);
 					break;
 				case RIGHT:
-					playerInRange = (player.x > this.x+this.width/2 && player.y+player.height > this.y && player.y < this.y + this.height);
+					objectInRange = (object.x > this.x+this.width/2 && object.y+object.height > this.y && object.y < this.y + this.height);
 			}
 			
-			return playerInRange;	
+			return objectInRange;	
 		}
 		
 		/** 
@@ -183,7 +265,13 @@ package GameObjects
 		private function activate():void
 		{
 			// TODO: Activation book-keeping
+			if(!_active) 
+			{
+				updateReflection();
+				_playerReflection.last = new FlxPoint(_playerReflection.x, _playerReflection.y);
+			}
 			_active = true;
+			
 		}
 		
 		/**
@@ -192,7 +280,10 @@ package GameObjects
 		private function deactivate():void
 		{
 			// TODO: Deactivation book-keeping
+			_playerReflection.x = 0;
+			_playerReflection.y = 0;
 			_active = false;
+			
 			
 		}
 		
@@ -347,6 +438,31 @@ package GameObjects
 			_mirrorTransparency.x = _mirrorTilemap.x+_mirrorTilemap.width/2;
 			_mirrorTransparency.y = _mirrorTilemap.y+_mirrorTilemap.height/2;
 
+		}
+		
+		
+		/**
+		 * Function that looks through the possible extra mirror objects and adds them
+		 * to our list of extended objects. Should only add objects within our reflected rectangle
+		 * assumes that createReflectedTilemap has already been called. 
+		 */
+		public function createMirrorObjects(possibleMirrorObjects:Array):void
+		{
+			for each (var object:FlxObject in possibleMirrorObjects)
+			{
+				if(!_mirrorTilemap.getBounds().overlaps(new FlxRect(object.x, object.y, object.width, object.height)))
+					continue;
+				if(object is MirrorObstacle)
+				{
+					var tileWidth:int = _mirrorTilemap.width/_mirrorTilemap.widthInTiles;
+					var tileHeight:int = _mirrorTilemap.height/_mirrorTilemap.heightInTiles;
+					var tileX:int = (object.x - _mirrorTilemap.x)/tileWidth;
+					var tileY:int = (object.y - _mirrorTilemap.y)/tileHeight;
+					_mirrorTilemap.setTile(tileX, tileY, 1);
+				}
+				else
+					_mirrorExtraObjects.add(object);
+			}
 		}
 		
 	}
