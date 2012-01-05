@@ -21,7 +21,7 @@ package GameObjects
 		private var _mirrorExtraObjects:FlxGroup;
 
 		// Every mirror has a distinct reflection of the player. 
-		private var _playerReflection:FlxSprite;
+		private var _playerReflection:PlayerReflection;
 		
 		// Whether or not this mirror is active 
 		private var _active:Boolean = false;
@@ -67,7 +67,7 @@ package GameObjects
 			
 			// The player's reflection is basically the same sprite as the player
 			// It mainly needs to be reflected in certain ways
-			_playerReflection = new FlxSprite();
+			_playerReflection = new PlayerReflection();
 			_playerReflection.loadGraphic(ResourceManager.playerArt, true, true, 8, 15);
 			
 			// set up our group of extra objects
@@ -94,6 +94,7 @@ package GameObjects
 				// TODO: Code to render the mirror objects assuming the mirror is active
 				_mirrorTilemap.draw();
 				_mirrorExtraObjects.draw();
+				_playerReflection.updateClippingInfo(new FlxRect(_mirrorTilemap.x, _mirrorTilemap.y, _mirrorTilemap.width, _mirrorTilemap.height));
 				_playerReflection.draw();
 				_mirrorTransparency.draw();
 			}
@@ -213,7 +214,6 @@ package GameObjects
 					break;
 				case LEFT:
 					player.y = _playerReflection.y;
-					//player.x = this.x+this.width + (this.x-(_playerReflection.x+_playerReflection.width));
 					player.x = this.x-(_playerReflection.x-(this.x+this.width))-player.width;
 					break;
 				case DOWN:
@@ -225,7 +225,7 @@ package GameObjects
 					player.x = this.x - ((_playerReflection.x-(this.x+this.width))+_playerReflection.width);
 					break;
 			}
-
+		
 			return true;
 		}
 		
