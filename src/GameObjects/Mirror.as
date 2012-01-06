@@ -268,7 +268,10 @@ package GameObjects
 			if(!_active) 
 			{
 				updateReflection();
-				_playerReflection.last = new FlxPoint(_playerReflection.x, _playerReflection.y);
+				// Make sure any lagging deltas don't give us a nasty collision surprises
+				_playerReflection.preUpdate();
+				_mirrorTilemap.preUpdate();
+
 			}
 			_active = true;
 			
@@ -280,10 +283,12 @@ package GameObjects
 		private function deactivate():void
 		{
 			// TODO: Deactivation book-keeping
-			_playerReflection.x = 0;
-			_playerReflection.y = 0;
-			_active = false;
-			
+			if(_active)
+			{
+				_playerReflection.x = 0;
+				_playerReflection.y = 0;
+				_active = false;
+			}
 			
 		}
 		
@@ -395,7 +400,7 @@ package GameObjects
 						}
 						csv+="\n";
 					}
-					_mirrorTilemap.loadMap(csv, ResourceManager.floorMapArt, 0, 0, FlxTilemap.OFF, 0, 0);
+					_mirrorTilemap.loadMap(csv, ResourceManager.floorMapArt, 0, 0, FlxTilemap.OFF, 0, 1, 2);
 					_mirrorTilemap.x = this.x;
 					_mirrorTilemap.y = this.y-_mirrorTilemap.height;
 					_mirrorTransparency.scale = new FlxPoint(_mirrorTilemap.width, _mirrorTilemap.height);
@@ -424,7 +429,7 @@ package GameObjects
 						}
 						csv+="\n";
 					}
-					_mirrorTilemap.loadMap(csv, ResourceManager.floorMapArt, 0, 0, FlxTilemap.OFF, 0, 0);
+					_mirrorTilemap.loadMap(csv, ResourceManager.floorMapArt, 0, 0, FlxTilemap.OFF, 0, 1, 2);
 					_mirrorTilemap.y = this.y;
 					_mirrorTilemap.x = this.x-_mirrorTilemap.width;
 					_mirrorTransparency.scale = new FlxPoint(_mirrorTilemap.width, _mirrorTilemap.height);
@@ -433,7 +438,7 @@ package GameObjects
 					return;
 			}
 			
-			_mirrorTilemap.loadMap(csv, ResourceManager.floorMapArt, 0, 0, FlxTilemap.OFF, 0, 0);
+			_mirrorTilemap.loadMap(csv, ResourceManager.floorMapArt, 0, 0, FlxTilemap.OFF, 0, 1, 2);
 			_mirrorTransparency.scale = new FlxPoint(_mirrorTilemap.width, _mirrorTilemap.height);
 			_mirrorTransparency.x = _mirrorTilemap.x+_mirrorTilemap.width/2;
 			_mirrorTransparency.y = _mirrorTilemap.y+_mirrorTilemap.height/2;

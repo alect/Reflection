@@ -3,9 +3,13 @@ package GameStates
 	import GameObjects.Player;
 	import GameObjects.Room;
 	
+	import Utils.RoomLoader;
+	import Utils.ResourceManager;
+	
 	import org.flixel.FlxG;
 	import org.flixel.FlxState;
 	import org.flixel.FlxText;
+	
 	
 	public class PlayState extends FlxState
 	{
@@ -22,10 +26,10 @@ package GameStates
 		public override function create():void
 		{
 			
-			room = new Room();
+			room = RoomLoader.loadRoom(ResourceManager.testRoom);
 			this.add(room);
 			
-			_player = new Player(22, 22);
+			_player = new Player(FlxG.width/2, FlxG.height/2-40);
 			this.add(_player);
 
 		}
@@ -34,7 +38,7 @@ package GameStates
 		{
 			FlxG.collide(room, _player);
 			
-			//room.update();
+			//\\room.update();
 			//Make sure the player updates before everything else
 			//_player.update();
 			

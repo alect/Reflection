@@ -11,6 +11,11 @@ package GameObjects
 		
 		public function TwoWayMirror(X:Number=0, Y:Number=0, Width:Number=0, Height:Number=0, alignment:uint=TwoWayMirror.HORIZONTAL)
 		{
+			// To easily maintain collisions
+			this.x = X;
+			this.y = Y;
+			this.width = Width;
+			this.height = Height;
 			if(alignment == HORIZONTAL)
 			{
 				_mirror1 = new Mirror(X, Y, Width, Height, LEFT);

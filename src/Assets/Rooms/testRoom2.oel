@@ -1,0 +1,123 @@
+<level>
+  <width>320</width>
+  <height>240</height>
+  <grid set="Tiles">
+    <tile tx="0" ty="0" x="110" y="50"/>
+    <tile tx="0" ty="0" x="120" y="50"/>
+    <tile tx="0" ty="0" x="130" y="50"/>
+    <tile tx="0" ty="0" x="140" y="50"/>
+    <tile tx="0" ty="0" x="150" y="50"/>
+    <tile tx="0" ty="0" x="160" y="50"/>
+    <tile tx="0" ty="0" x="170" y="50"/>
+    <tile tx="0" ty="0" x="180" y="50"/>
+    <tile tx="0" ty="0" x="190" y="50"/>
+    <tile tx="0" ty="0" x="200" y="50"/>
+    <tile tx="0" ty="0" x="210" y="50"/>
+    <tile tx="0" ty="0" x="220" y="50"/>
+    <tile tx="0" ty="0" x="230" y="50"/>
+    <tile tx="0" ty="0" x="100" y="50"/>
+    <tile tx="0" ty="0" x="100" y="60"/>
+    <tile tx="0" ty="0" x="100" y="70"/>
+    <tile tx="0" ty="0" x="100" y="80"/>
+    <tile tx="0" ty="0" x="100" y="90"/>
+    <tile tx="0" ty="0" x="230" y="60"/>
+    <tile tx="0" ty="0" x="230" y="90"/>
+    <tile tx="0" ty="0" x="220" y="90"/>
+    <tile tx="0" ty="0" x="210" y="90"/>
+    <tile tx="0" ty="0" x="200" y="90"/>
+    <tile tx="0" ty="0" x="190" y="90"/>
+    <tile tx="0" ty="0" x="180" y="90"/>
+    <tile tx="0" ty="0" x="170" y="90"/>
+    <tile tx="0" ty="0" x="160" y="90"/>
+    <tile tx="0" ty="0" x="150" y="90"/>
+    <tile tx="0" ty="0" x="140" y="90"/>
+    <tile tx="0" ty="0" x="130" y="90"/>
+    <tile tx="0" ty="0" x="120" y="90"/>
+    <tile tx="0" ty="0" x="110" y="90"/>
+    <tile tx="0" ty="0" x="110" y="80"/>
+    <tile tx="0" ty="0" x="110" y="70"/>
+    <tile tx="0" ty="0" x="110" y="60"/>
+    <tile tx="0" ty="0" x="120" y="60"/>
+    <tile tx="0" ty="0" x="120" y="70"/>
+    <tile tx="0" ty="0" x="120" y="80"/>
+    <tile tx="0" ty="0" x="130" y="80"/>
+    <tile tx="0" ty="0" x="130" y="60"/>
+    <tile tx="0" ty="0" x="130" y="70"/>
+    <tile tx="0" ty="0" x="140" y="70"/>
+    <tile tx="0" ty="0" x="140" y="60"/>
+    <tile tx="0" ty="0" x="150" y="60"/>
+    <tile tx="0" ty="0" x="150" y="70"/>
+    <tile tx="0" ty="0" x="150" y="80"/>
+    <tile tx="0" ty="0" x="160" y="80"/>
+    <tile tx="0" ty="0" x="160" y="70"/>
+    <tile tx="0" ty="0" x="160" y="60"/>
+    <tile tx="0" ty="0" x="170" y="60"/>
+    <tile tx="0" ty="0" x="180" y="60"/>
+    <tile tx="0" ty="0" x="180" y="70"/>
+    <tile tx="0" ty="0" x="180" y="80"/>
+    <tile tx="0" ty="0" x="190" y="80"/>
+    <tile tx="0" ty="0" x="200" y="80"/>
+    <tile tx="0" ty="0" x="200" y="70"/>
+    <tile tx="0" ty="0" x="190" y="70"/>
+    <tile tx="0" ty="0" x="190" y="60"/>
+    <tile tx="0" ty="0" x="200" y="60"/>
+    <tile tx="0" ty="0" x="210" y="60"/>
+    <tile tx="0" ty="0" x="210" y="70"/>
+    <tile tx="0" ty="0" x="220" y="80"/>
+    <tile tx="0" ty="0" x="230" y="80"/>
+    <tile tx="0" ty="0" x="230" y="70"/>
+    <tile tx="0" ty="0" x="220" y="70"/>
+    <tile tx="0" ty="0" x="220" y="60"/>
+    <tile tx="10" ty="0" x="170" y="80"/>
+    <tile tx="10" ty="0" x="170" y="70"/>
+    <tile tx="10" ty="0" x="140" y="80"/>
+    <tile tx="10" ty="0" x="210" y="80"/>
+    <tile tx="10" ty="0" x="90" y="100"/>
+    <tile tx="10" ty="0" x="100" y="100"/>
+    <tile tx="10" ty="0" x="110" y="100"/>
+    <tile tx="10" ty="0" x="120" y="100"/>
+    <tile tx="10" ty="0" x="130" y="100"/>
+    <tile tx="10" ty="0" x="140" y="100"/>
+    <tile tx="10" ty="0" x="150" y="100"/>
+    <tile tx="10" ty="0" x="160" y="100"/>
+    <tile tx="10" ty="0" x="170" y="100"/>
+    <tile tx="10" ty="0" x="180" y="100"/>
+    <tile tx="10" ty="0" x="90" y="70"/>
+    <tile tx="10" ty="0" x="90" y="60"/>
+    <tile tx="10" ty="0" x="90" y="50"/>
+    <tile tx="10" ty="0" x="90" y="40"/>
+    <tile tx="10" ty="0" x="100" y="40"/>
+    <tile tx="10" ty="0" x="110" y="40"/>
+    <tile tx="10" ty="0" x="120" y="40"/>
+    <tile tx="10" ty="0" x="130" y="40"/>
+    <tile tx="10" ty="0" x="190" y="40"/>
+    <tile tx="10" ty="0" x="200" y="40"/>
+    <tile tx="10" ty="0" x="210" y="40"/>
+    <tile tx="10" ty="0" x="220" y="40"/>
+    <tile tx="10" ty="0" x="230" y="40"/>
+    <tile tx="10" ty="0" x="240" y="40"/>
+    <tile tx="10" ty="0" x="240" y="100"/>
+    <tile tx="0" ty="0" x="190" y="100"/>
+    <tile tx="0" ty="0" x="200" y="100"/>
+    <tile tx="0" ty="0" x="210" y="100"/>
+    <tile tx="0" ty="0" x="220" y="100"/>
+    <tile tx="0" ty="0" x="230" y="100"/>
+    <tile tx="0" ty="0" x="240" y="90"/>
+    <tile tx="0" ty="0" x="240" y="80"/>
+    <tile tx="0" ty="0" x="240" y="70"/>
+    <tile tx="0" ty="0" x="240" y="60"/>
+    <tile tx="0" ty="0" x="240" y="50"/>
+    <tile tx="0" ty="0" x="90" y="80"/>
+    <tile tx="0" ty="0" x="90" y="90"/>
+    <tile tx="10" ty="0" x="140" y="40"/>
+    <tile tx="10" ty="0" x="150" y="40"/>
+    <tile tx="10" ty="0" x="160" y="40"/>
+    <tile tx="10" ty="0" x="170" y="40"/>
+    <tile tx="10" ty="0" x="180" y="40"/>
+  </grid>
+  <objects>
+    <vert_mirror x="190" y="100" width="50"/>
+    <hor_mirror x="240" y="50" height="50"/>
+    <hor_mirror x="90" y="80" height="20"/>
+  </objects>
+</level>

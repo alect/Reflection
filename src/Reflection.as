@@ -4,7 +4,7 @@ package
 	import GameStates.MainMenuState;
 	
 	import org.flixel.*;
-	[SWF(width="640", height="480", backgroundColor="#000000")]
+	[SWF(width="640", height="480", backgroundColor="#808080")]
 	
 	
 	public class Reflection extends FlxGame

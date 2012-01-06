@@ -1,0 +1,18 @@
+<project>
+  <name>Reflection</name>
+  <settings>
+    <defaultWidth>320</defaultWidth>
+    <defaultHeight>240</defaultHeight>
+  </settings>
+  <tilesets>
+    <tileset name="Tiles" image="tiles.png" tileHeight="10" tileWidth="10" />
+  </tilesets>
+  <objects>
+    <object name="vert_mirror" image="vert-mirror.png" width="10" height="10" resizableX="true" tile="true"/>
+    <object name="hor_mirror" image="hor-mirror.png" width="10" height="10" resizableY="true" tile="true"/>
+  </objects>
+  <layers>
+    <tiles name="grid" gridSize="10"/>
+    <objects name="objects" gridSize="10"/>
+  </layers>
+</project>
