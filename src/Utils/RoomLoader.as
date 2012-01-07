@@ -1,6 +1,7 @@
 package Utils
 {
 	import GameObjects.Mirror;
+	import GameObjects.MirrorObstacle;
 	import GameObjects.Room;
 	import GameObjects.TwoWayMirror;
 	
@@ -15,7 +16,9 @@ package Utils
 		private static const RED_FLOOR_Y:int = 0;
 		
 		private static const WALL_X:int = 10;
-		private static const GREY_WALL_Y:int = 0;
+		private static const NORMAL_WALL_Y:int = 0;
+		private static const MIRROR_WALL_Y:int = 10;
+		private static const GLASS_WALL_Y:int = 20;
 		
 		private static const MIRROR_X:int = 20;
 		private static const BASIC_VERTICAL_MIRROR:int = 0;
@@ -54,8 +57,22 @@ package Utils
 				if (dataElement.@tx == FLOOR_X && dataElement.@ty == RED_FLOOR_Y)
 					tileArray[tileX][tileY] = 1;
 				
-				if (dataElement.@tx == WALL_X && dataElement.@ty == GREY_WALL_Y)
-					tileArray[tileX][tileY] = 2; // Place a wall
+				// Walls
+				if (dataElement.@tx == WALL_X)
+				{
+					// Normal wall
+					if (dataElement.@ty == NORMAL_WALL_Y)
+						tileArray[tileX][tileY] = Globals.NORMAL_WALL;
+					
+					// Mirror wall (wall existing only in a reflection
+					if (dataElement.@ty == MIRROR_WALL_Y)
+						roomToReturn.addMirrorObject(new MirrorObstacle(dataElement.@x, dataElement.@y, Globals.TILE_SIZE, Globals.TILE_SIZE));
+					
+					// Glass wall
+					if (dataElement.@ty == GLASS_WALL_Y)
+						tileArray[tileX][tileY] = Globals.GLASS_WALL;
+				}
+				
 			}
 			
 			// load the tilemap

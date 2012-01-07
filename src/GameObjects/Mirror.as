@@ -2,6 +2,7 @@ package GameObjects
 {
 	import GameStates.PlayState;
 	
+	import Utils.Globals;
 	import Utils.ResourceManager;
 	
 	import org.flixel.FlxG;
@@ -32,7 +33,8 @@ package GameObjects
 		// Uses the FlxObject Facing constants to keep things simple
 		private var _alignment:uint;
 		
-		
+		// keep a copy of the room's real tilemap
+		private var _roomTilemap:FlxTilemap;
 		// a basic reflection of the encapsulating room's tilemap
 		private var _mirrorTilemap:FlxTilemap;
 		
@@ -240,20 +242,37 @@ package GameObjects
 			// For now, return true if the player intersects our rectangle. 
 			// In the future, might also want to check if the player is hidden behind objects etc. 
 			var objectInRange:Boolean = false;
+			var rayToCast:FlxObject;
 			switch(this._alignment)
 			{
 				case UP:
 					objectInRange = (object.y+object.height/2 < this.y && object.x+object.width > this.x && object.x < this.x+this.width);
+					// Cast a ray to the player to see if we're being blocked by any (non glass) walls
+					rayToCast = new FlxObject(object.x+object.width/2, object.y+object.height/2, 1, this.y-(object.y+object.height/2));
 					break;
 				case LEFT:
 					objectInRange = (object.x+object.width/2 < this.x && object.y+object.height > this.y && object.y < this.y+this.height);
+					rayToCast = new FlxObject(object.x+object.width/2, object.y+object.height/2, this.x-(object.x+object.width/2), 1);
 					break;
 				case DOWN:
 					objectInRange = (object.y > this.y+this.height/2 && object.x+object.width > this.x && object.x < this.x+this.width);
+					rayToCast = new FlxObject(object.x+object.width/2, this.y+this.height, 1, object.y-(this.y+this.height));
 					break;
 				case RIGHT:
 					objectInRange = (object.x > this.x+this.width/2 && object.y+object.height > this.y && object.y < this.y + this.height);
+					rayToCast = new FlxObject(this.x+this.width, object.y+object.height/2, object.x-(this.x+this.width), 1);
+					break;
 			}
+			if (!objectInRange)
+				return false;
+			
+			// Now, let's cast a ray to the player and see if it intersects anything
+			rayToCast.preUpdate();
+			
+			// First, disable collisions with glass walls just for this collision test
+			_roomTilemap.setTileProperties(Globals.GLASS_WALL, FlxObject.NONE);
+			objectInRange = !_roomTilemap.overlapsWithCallback(rayToCast);
+			_roomTilemap.setTileProperties(Globals.GLASS_WALL, FlxObject.ANY);
 			
 			return objectInRange;	
 		}
@@ -298,6 +317,7 @@ package GameObjects
 		 */
 		public function createTileReflections(tilemap:FlxTilemap):void
 		{
+			_roomTilemap = tilemap;
 			var i:int, j:int, tileX:int, tileY:int;
 			var tileWidth:int = (int)(tilemap.width/tilemap.widthInTiles);
 			var tileHeight:int = (int)(tilemap.height/tilemap.heightInTiles);
@@ -463,7 +483,7 @@ package GameObjects
 					var tileHeight:int = _mirrorTilemap.height/_mirrorTilemap.heightInTiles;
 					var tileX:int = (object.x - _mirrorTilemap.x)/tileWidth;
 					var tileY:int = (object.y - _mirrorTilemap.y)/tileHeight;
-					_mirrorTilemap.setTile(tileX, tileY, 1);
+					_mirrorTilemap.setTile(tileX, tileY, Globals.NORMAL_WALL);
 				}
 				else
 					_mirrorExtraObjects.add(object);

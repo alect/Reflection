@@ -45,5 +45,10 @@ package GameObjects
 			mirror.createMirrorObjects(_mirrorObjects);
 			_mirrors.add(mirror);
 		}
+		
+		public function addMirrorObject(object:FlxObject):void
+		{
+			_mirrorObjects.push(object);
+		}
 	}
 }

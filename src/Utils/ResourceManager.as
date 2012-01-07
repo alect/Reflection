@@ -15,7 +15,7 @@ package Utils
 		
 		
 		// Rooms
-		[Embed(source="Assets/Rooms/testRoom.oel", mimeType="application/octet-stream")]
+		[Embed(source="Assets/Rooms/testRoom3.oel", mimeType="application/octet-stream")]
 		public static var testRoom:Class;
 	}
 }
