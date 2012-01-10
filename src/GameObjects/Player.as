@@ -58,14 +58,7 @@ package GameObjects
 			
 			// Update our movement and enforce bounds
 			super.update();
-			if (this.x < 0)
-				this.x = 0;
-			if (this.x + this.width > FlxG.width)
-				this.x = FlxG.width-this.width;
-			if (this.y < 0)
-				this.y = 0;
-			if (this.y + this.height > FlxG.height)
-				this.y = FlxG.height - this.height;
+
 		}
 		
 	}

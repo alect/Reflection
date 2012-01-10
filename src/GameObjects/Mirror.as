@@ -76,7 +76,25 @@ package GameObjects
 			_mirrorExtraObjects = new FlxGroup();
 		}
 		
-		
+		// Special consideration needs to be taken when we set our positions
+		public function setPosition(X:int, Y:int):void
+		{
+			_mirrorTilemap.x = _mirrorTilemap.x - this.x + X;
+			_mirrorTilemap.y = _mirrorTilemap.y - this.y + Y;
+			
+			_mirrorTransparency.x = _mirrorTransparency.x - this.x + X;
+			_mirrorTransparency.y = _mirrorTransparency.y - this.y + Y;
+			
+			for each (var object:FlxObject in _mirrorExtraObjects) 
+			{
+				object.x = object.x - this.x + X;
+				object.y = object.y - this.y + Y;
+			}
+			
+			this.x = X;
+			this.y = Y;
+		}
+
 		public override function draw():void
 		{
 			// The actual mirror sprites are tiled across our width and height

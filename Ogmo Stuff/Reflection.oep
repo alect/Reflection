@@ -10,6 +10,31 @@
   <objects>
     <object name="vert_mirror" image="vert-mirror.png" width="10" height="10" resizableX="true" tile="true"/>
     <object name="hor_mirror" image="hor-mirror.png" width="10" height="10" resizableY="true" tile="true"/>
+    <object name="exit_right" image="exit_right.png" width="10" height="10" resizableY="true" tile="true">
+      <values>
+        <string name="dest_room" default="null" />
+	<integer name="dest_index" default="0" />
+      </values>
+    </object>
+    <object name="exit_down" image="exit_down.png" width="10" height="10" resizableX="true" tile="true">
+      <values>
+        <string name="dest_room" default="null" />
+	<integer name="dest_index" default="0" />
+      </values>
+    </object>
+    <object name="exit_left" image="exit_left.png" width="10" height="10" resizableY="true" tile="true">
+      <values>
+        <string name="dest_room" default="null" />
+	<integer name="dest_index" default="0" />
+      </values>
+    </object>
+    <object name="exit_up" image="exit_up.png" width="10" height="10" resizableX="true" tile="true">
+      <values>
+        <string name="dest_room" default="null" />
+	<integer name="dest_index" default="0" />
+      </values>
+    </object>
+    
   </objects>
   <layers>
     <tiles name="grid" gridSize="10"/>

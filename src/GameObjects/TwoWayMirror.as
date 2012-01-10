@@ -28,6 +28,14 @@ package GameObjects
 			}
 		}
 		
+		public override function setPosition(X:int, Y:int):void
+		{
+			_mirror1.setPosition(X, Y);
+			_mirror2.setPosition(X, Y);
+			this.x = X;
+			this.y = Y;
+		}
+		
 		public override function update():void
 		{
 			_mirror1.update();

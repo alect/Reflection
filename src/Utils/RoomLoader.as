@@ -3,11 +3,13 @@ package Utils
 	import GameObjects.Mirror;
 	import GameObjects.MirrorObstacle;
 	import GameObjects.Room;
+	import GameObjects.RoomExit;
 	import GameObjects.TwoWayMirror;
 	
 	import flash.utils.ByteArray;
 	
 	import org.flixel.FlxG;
+	import org.flixel.FlxObject;
 	
 	public class RoomLoader
 	{
@@ -28,7 +30,7 @@ package Utils
 		 * Function that takes XML data (from the OGMO editor)
 		 * and turns it into a Room object that can then be linked to other rooms
 		 */
-		public static function loadRoom(xml:Class):Room
+		public static function loadRoom(name:String, xml:Class):Room
 		{
 			var rawData:ByteArray = new xml;
 			var dataString:String = rawData.readUTFBytes(rawData.length);
@@ -48,7 +50,7 @@ package Utils
 				tileArray.push(column);
 			}
 			
-			var roomToReturn:Room = new Room();
+			var roomToReturn:Room = new Room(name);
 			
 			for each (dataElement in dataList)
 			{
@@ -91,6 +93,43 @@ package Utils
 			{
 				var horMirror:Mirror = new TwoWayMirror(dataElement.@x, dataElement.@y, Globals.TILE_SIZE, dataElement.@height, TwoWayMirror.HORIZONTAL);
 				roomToReturn.addMirror(horMirror);
+			}
+			
+			// Load the exits
+			dataList = xmlData.objects.exit_right;
+			for each (dataElement in dataList)
+			{
+				var rightExit:RoomExit = new RoomExit(dataElement.@x, dataElement.@y, Globals.TILE_SIZE, dataElement.@height, FlxObject.RIGHT);
+				rightExit.destRoom = dataElement.@dest_room;
+				rightExit.destExitIndex = dataElement.@dest_index;
+				roomToReturn.addExit(rightExit);
+			}
+			
+			dataList = xmlData.objects.exit_down;
+			for each (dataElement in dataList)
+			{
+				var downExit:RoomExit = new RoomExit(dataElement.@x, dataElement.@y, dataElement.@width, Globals.TILE_SIZE, FlxObject.DOWN);
+				downExit.destRoom = dataElement.@dest_room;
+				downExit.destExitIndex = dataElement.@dest_index;
+				roomToReturn.addExit(downExit);
+			}
+			
+			dataList = xmlData.objects.exit_left;
+			for each (dataElement in dataList)
+			{
+				var leftExit:RoomExit = new RoomExit(dataElement.@x, dataElement.@y, Globals.TILE_SIZE, dataElement.@height, FlxObject.LEFT);
+				leftExit.destRoom = dataElement.@dest_room;
+				leftExit.destExitIndex = dataElement.@dest_index;
+				roomToReturn.addExit(leftExit);
+			}
+			
+			dataList = xmlData.objects.exit_up;
+			for each (dataElement in dataList)
+			{
+				var upExit:RoomExit = new RoomExit(dataElement.@x, dataElement.@y, dataElement.@width, Globals.TILE_SIZE, FlxObject.UP);
+				upExit.destRoom = dataElement.@dest_room;
+				upExit.destExitIndex = dataElement.@dest_index;
+				roomToReturn.addExit(upExit);
 			}
 			
 			return roomToReturn;
