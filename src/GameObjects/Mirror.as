@@ -501,7 +501,7 @@ package GameObjects
 					var tileHeight:int = _mirrorTilemap.height/_mirrorTilemap.heightInTiles;
 					var tileX:int = (object.x - _mirrorTilemap.x)/tileWidth;
 					var tileY:int = (object.y - _mirrorTilemap.y)/tileHeight;
-					_mirrorTilemap.setTile(tileX, tileY, Globals.NORMAL_WALL);
+					_mirrorTilemap.setTile(tileX, tileY, Globals.BLUE_WALL);
 				}
 				else
 					_mirrorExtraObjects.add(object);

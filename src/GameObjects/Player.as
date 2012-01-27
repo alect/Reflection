@@ -19,7 +19,6 @@ package GameObjects
 			this.addAnimation("idle", [0]);
 			this.addAnimation("walk", [1, 2], 10, true);
 			this.play("idle");
-			
 			// Set up Drag for natural movement
 			drag.x = PLAYER_WALK_HOR_SPEED * 8;
 			drag.y = PLAYER_WALK_VERT_SPEED * 8;

@@ -6,6 +6,7 @@ package Utils
 		
 		public static const NORMAL_WALL:int = 2;
 		public static const GLASS_WALL:int = 3;
+		public static const BLUE_WALL:int = 4;
 		
 		public static const CAMERA_SWITCH_SPEED:int = 500;
 	}
