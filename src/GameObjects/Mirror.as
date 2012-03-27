@@ -12,7 +12,7 @@ package GameObjects
 	import org.flixel.FlxRect;
 	import org.flixel.FlxSprite;
 	import org.flixel.FlxTilemap;
-	import org.osmf.layout.AbsoluteLayoutFacet;
+	//import org.osmf.layout.AbsoluteLayoutFacet;
 	
 	public class Mirror extends FlxObject
 	{
